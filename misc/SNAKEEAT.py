@@ -5,9 +5,10 @@ T = int(raw_input().strip())
 for i in xrange(T):
 	N, Q = map(int, raw_input().strip().split(' '))
 	snakes = map(int, raw_input().strip().split(' '))
+	sr_snakes = sorted(snakes)
+	
 	for ii in xrange(Q):
 		K = int(raw_input().strip())
-		sr_snakes = sorted(snakes)
 		count = 0
 		R = N-1
 		L = 0
