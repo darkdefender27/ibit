@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Author: Shubham Utwal
+# Link: http://practice.geeksforgeeks.org/problems/number-of-groups/0
+
 import operator as op
 import functools as ft
 
