@@ -81,6 +81,7 @@ def main():
 
 		for ans in result:
 			print ans,
+		print "\n"
 
 
 if __name__ == '__main__':
