@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import math as mt
 
 
 def main():
@@ -7,15 +8,9 @@ def main():
         n, b = map(int, raw_input().strip().split(' '))
         result = 0
         aux_size = (n/b)
-        if aux_size%2 == 0:
-            c_sum = b*(aux_size/2)
-            c_mult = (aux_size/2)
-            result = c_sum * c_mult
-        else:
-            aux_ceil = (aux_size/2) + 1
-            c_sum = aux_ceil*b
-            c_mult = aux_size - aux_ceil
-            result = c_sum * c_mult
+        c_sum = (b*(aux_size/2)) + (n%b)
+        c_mult = int(mt.ceil((aux_size/2.0)))
+        result = c_sum * c_mult
 
         print int(result)
 
