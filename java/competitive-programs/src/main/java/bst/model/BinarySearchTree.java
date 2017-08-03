@@ -47,14 +47,39 @@ public class BinarySearchTree {
         return isPresent;
     }
 
-
     public void put(Integer value) {
 
-        Node newNode = new Node(value, null, null);
+        if(value == null) {
+            throw new InvalidValueException(INVALID_VALUE_MSG);
+        } else {
+            this.putRecursive(this.root, value);
+        }
+    }
+
+    public void putRecursive(Node rootNode, Integer value) {
+
+        if(rootNode == null) {
+            this.root = new Node(value, null, null);
+        } else if(rootNode.getLeft() == null && rootNode.getValue() >= value) {
+            rootNode.setLeft(new Node(value, null, null));
+        } else if(rootNode.getRight() == null && rootNode.getValue() < value) {
+            rootNode.setRight(new Node(value, null, null));
+        } else {
+            if(rootNode.getValue() < value) {
+                putRecursive(rootNode.getRight(), value);
+            } else {
+                putRecursive(rootNode.getLeft(), value);
+            }
+        }
+    }
+
+    public void putIterative(Integer value) {
 
         if(value == null) {
             throw new InvalidValueException(INVALID_VALUE_MSG);
         }
+
+        Node newNode = new Node(value, null, null);
 
         if(this.root == null) {
             this.root = newNode;
