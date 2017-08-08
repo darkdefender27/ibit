@@ -4,7 +4,7 @@ import bst.exceptions.EmptyTreeException;
 import bst.exceptions.InvalidValueException;
 
 /**
- * Created by shubhamutwal on 03/08/17.
+ * Brewed by shubhamutwal on 03/08/17.
  */
 public class BinarySearchTree {
 
@@ -47,6 +47,18 @@ public class BinarySearchTree {
         return isPresent;
     }
 
+    public boolean contains(Node node, int value) {
+        if(node == null) {
+            return false;
+        } else if(node.getValue() == value) {
+            return true;
+        } else if(node.getValue() < value) {
+            return contains(node.getRight(), value);
+        } else {
+            return contains(node.getLeft(), value);
+        }
+    }
+
     public void put(Integer value) {
 
         if(value == null) {
@@ -56,20 +68,18 @@ public class BinarySearchTree {
         }
     }
 
-    public void putRecursive(Node rootNode, Integer value) {
+    public void putRecursive(Node node, Integer value) {
 
-        if(rootNode == null) {
+        if(node == null) {
             this.root = new Node(value, null, null);
-        } else if(rootNode.getLeft() == null && rootNode.getValue() >= value) {
-            rootNode.setLeft(new Node(value, null, null));
-        } else if(rootNode.getRight() == null && rootNode.getValue() < value) {
-            rootNode.setRight(new Node(value, null, null));
+        } else if(node.getLeft() == null && node.getValue() >= value) {
+            node.setLeft(new Node(value, null, null));
+        } else if(node.getRight() == null && node.getValue() < value) {
+            node.setRight(new Node(value, null, null));
+        } else if(node.getValue() < value) {
+            putRecursive(node.getRight(), value);
         } else {
-            if(rootNode.getValue() < value) {
-                putRecursive(rootNode.getRight(), value);
-            } else {
-                putRecursive(rootNode.getLeft(), value);
-            }
+            putRecursive(node.getLeft(), value);
         }
     }
 
