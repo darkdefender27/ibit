@@ -1,69 +1,6 @@
 #!/usr/bin/env python
-import heapq as hq
 import sys
 from sets import Set
-
-class Company(object):
-
-    def __init__(self, company_id, salary_offered, max_jobs):
-        self.company_id = company_id
-        self.salary_offered = salary_offered
-        self.available_jobs = max_jobs
-        self.recruited = False
-
-    def __cmp__(self, other):
-        return -cmp(self.salary_offered, other.salary_offered)
-
-    def are_jobs_available(self):
-        return True if self.available_jobs > 0 else False
-
-    def offer_job(self):
-        self.available_jobs -= 1
-        if not self.recruited:
-            self.recruited = True
-
-
-class Candidate(object):
-
-    def __init__(self, candidate_id, min_expectation):
-        self.candidate_id = candidate_id
-        self.min_expectation = min_expectation
-        self.qualified_companies = []
-
-    def add_qualified_company(self, company):
-        hq.heappush(self.qualified_companies, company)
-
-    def get_max_job_offer(self, companies):
-        found = False
-        while(found == False and len(self.qualified_companies) > 0):
-            qual_comp = hq.heappop(self.qualified_companies)
-            if companies[qual_comp.company_id].are_jobs_available():
-                found = True
-
-        if found and qual_comp.salary_offered >= self.min_expectation:
-            return qual_comp
-        else:
-            return -1
-
-
-def solution(candidates, companies):
-    candidates_placed = 0
-    total_salary_sum = 0
-    companies_not_recruited_anyone = 0
-
-    for candidate in candidates:
-        job_offer = candidate.get_max_job_offer(companies)
-        if job_offer != -1:
-            company = companies[job_offer.company_id]
-            company.offer_job()
-            total_salary_sum += job_offer.offered_salary
-            candidates_placed += 1
-
-    for company in companies:
-        if not company.recruited:
-            companies_not_recruited_anyone += 1
-
-    print candidates_placed, total_salary_sum, companies_not_recruited_anyone
 
 
 def solution_arr(cand_min_sal, comp_info, qual):
@@ -121,16 +58,16 @@ def read_from_console():
         # i-th candidate's minimum salary expectation
         candidates_min_salary = map(int, raw_input().strip().split(' '))
         # 0 - Offered Salary :: 1 - Max Job Offers
-        companies_info = [[map(int, raw_input().strip().split(' '))] for i in xrange(m)]
+        companies_info = [map(int, raw_input().strip().split(' ')) for i in xrange(m)]
         # i-th candidate has qualified for a job in the j-th company
-        qual = [[map(None, raw_input().strip())] for i in xrange(n)]
+        qual = [map(None, raw_input().strip()) for ii in xrange(n)]
 
         solution_arr(candidates_min_salary, companies_info, qual)
 
 
 def main():
-    # read_from_console()
-    read_from_file()
+    read_from_console()
+    # read_from_file()
 
 
 if __name__ == '__main__':
