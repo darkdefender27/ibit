@@ -9,35 +9,37 @@ for _ in xrange(T):
     for i in xrange(n):
         arr_sum += arr[i]
 
-    avg = arr_sum/n
+    if arr_sum%n == 0:
+        avg, no_of_ops = (arr_sum/n), 0
+        for i in xrange(d):
+            d_sum, d_ct = 0, 0
+            for ii in xrange(i, n, d):
+                d_sum += arr[ii]
+                d_ct += 1
 
-    if avg%n != 0:
+            if d_sum%d_ct == 0 and (d_sum/d_ct) == avg:
+                d_avg, ops = (d_sum/d_ct), 0
+                for iii in xrange(i, n, d):
+                    if arr[iii] != d_avg and (iii + d) >= n:
+                        possible = False
+                        break
+                    else:
+                        diff = abs(arr[iii] - d_avg)
+                        if arr[iii] - d_avg > 0:
+                            arr[iii] -= diff
+                            arr[iii+d] += diff
+                        elif arr[iii] - d_avg < 0:
+                            arr[iii] += diff
+                            arr[iii+d] -= diff
+                        ops += diff
+                no_of_ops += ops
+            else:
+                possible = False
+                break
+    else:
         possible = False
 
-    operations, i, j = 0, 0, d
-    while(j<n and possible):
-        avg_1 = arr[i] + arr[j]
-        if avg_1%2 != 0:
-            possible = False
-        if(arr[i] <= arr[j]):
-            ops = (avg - arr[i])
-            operations += ops
-            arr[j] -= ops
-            arr[i] += ops
-        else:
-            ops = (avg - arr[j])
-            operations += ops
-            arr[j] += ops
-            arr[i] -= ops
-        i += 1
-        j += 1
-
-    for ii in xrange(len(arr)):
-        if arr[ii] != avg:
-            possible = False
-            break
-
     if possible:
-        print operations
+        print no_of_ops
     else:
         print -1
